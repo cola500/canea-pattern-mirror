@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<title>CANEA Innovation Experiment — Pattern Mirror</title>
+<style>
+  :root {
+    --ink: #1a1a1a;
+    --muted: #5a6a6a;
+    --soft: #8a9594;
+    --line: #e6e8e7;
+    --bg: #ffffff;
+    --card: #ffffff;
+    --accent: #0a6b3a;
+    --accent-soft: #e6f1ea;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 64px 24px 96px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- whitepaper --- */
+  .paper { max-width: 680px; margin: 0 auto; }
+  .hero { margin-bottom: 8px; }
+  .kicker {
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .paper h1 {
+    font-size: 30px;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    margin: 0 0 20px;
+    color: var(--ink);
+  }
+  .lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin: 0 0 22px;
+    max-width: 60ch;
+  }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #fafbfa;
+  }
+  section.s {
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--soft);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .paper h2 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    margin: 0 0 14px;
+  }
+  .paper p {
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin: 0 0 12px;
+    max-width: 64ch;
+  }
+  .paper p:last-child { margin-bottom: 0; }
+  .paper ul {
+    margin: 6px 0 0;
+    padding-left: 20px;
+  }
+  .paper li {
+    font-size: 15.5px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    max-width: 62ch;
+  }
+  .pullquote {
+    font-size: 19px;
+    line-height: 1.55;
+    font-weight: 500;
+    color: var(--ink);
+    border-left: 2px solid var(--accent);
+    padding: 2px 0 2px 20px;
+    margin: 4px 0 0;
+    max-width: 60ch;
+  }
+
+  /* --- prototype divider --- */
+  .try-divider {
+    max-width: 880px;
+    margin: 56px auto 16px;
+  }
+
+  /* --- prototype --- */
+  .wrap { max-width: 880px; margin: 0 auto; }
+  .panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 8px; }
+  textarea {
+    width: 100%;
+    min-height: 90px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    font: inherit;
+    color: var(--ink);
+    resize: vertical;
+  }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .row { display: flex; gap: 12px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+  button {
+    background: var(--accent);
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:hover { filter: brightness(1.05); }
+  .examples { font-size: 13px; color: var(--muted); }
+  .examples a { color: var(--accent); cursor: pointer; text-decoration: underline; margin-right: 12px; }
+  .results { display: grid; gap: 14px; }
+  .case {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .case h3 { margin: 0 0 6px; font-size: 16px; }
+  .meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .tag {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 999px;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .case dl { margin: 0; display: grid; grid-template-columns: 130px 1fr; row-gap: 6px; column-gap: 12px; font-size: 14px; }
+  .case dt { color: var(--muted); }
+  .case dd { margin: 0; }
+  .score { float: right; font-size: 12px; color: var(--muted); }
+  .empty { color: var(--muted); font-size: 14px; padding: 16px 0; }
+
+  /* --- personal footer (shared snippet, default palette) --- */
+  .personal-footer {
+    --pf-text:         #888;
+    --pf-text-strong:  #555;
+    --pf-link:         #555;
+    --pf-link-hover:   #222;
+    --pf-sep:          #bbb;
+    --pf-margin-top:   3.5rem;
+
+    margin: var(--pf-margin-top) 0 0 0;
+    color: var(--pf-text);
+    font-size: .8rem;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .personal-footer-name { color: var(--pf-text-strong); font-weight: 600; }
+  .personal-footer-sep { margin: 0 .35rem; color: var(--pf-sep); }
+  .personal-footer-link {
+    color: var(--pf-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+  .personal-footer-link:hover,
+  .personal-footer-link:focus-visible { color: var(--pf-link-hover); }
+</style>
+</head>
+<body>
+<article class="paper">
+
+  <header class="hero">
+    <div class="kicker">CANEA Innovation Experiment</div>
+    <h1>Systems Thinking + Rapid Prototyping Exploration</h1>
+    <p class="lede">Vi analyserade CANEA:s publika signaler, erbjudande och arbetssätt för att testa om systems thinking kunde identifiera innovationsmöjligheter som känns strategiskt relevanta för deras verklighet.</p>
+    <div class="badges">
+      <span class="badge">Thin Slice Prototype</span>
+      <span class="badge">Local-only experiment</span>
+    </div>
+  </header>
+
+  <section class="s">
+    <div class="section-label">Vad vi observerade</div>
+    <h2>Mönster snarare än problem</h2>
+    <ul>
+      <li>Koordination mellan konsultarm, plattform och utbildning sker i hög grad genom personliga relationer snarare än delade system.</li>
+      <li>Det organisatoriska minnet från 500+ implementationer lever till stor del i konsulternas huvuden — sällan i en sökbar form.</li>
+      <li>Informationsflöden mellan kundprojekt, produktroadmap och utbildningsinnehåll verkar fragmenterade.</li>
+      <li>Den operativa bilden över pågående engagemang förefaller spridd över flera system och samtal.</li>
+      <li>Mänskliga konversationer — Slack, kafferast, möten — kompenserar ofta för det som system inte gör synligt.</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="section-label">Experiment</div>
+    <h2>Cross-Customer Pattern Mirror</h2>
+    <p>Om konsulter snabbt kan hitta liknande historiska transformationer och implementationer, så kan organisatoriskt lärande skalas bättre än via Slack-frågor och personberoende nätverk.</p>
+    <p>Vi valde experimentet för att det testar något CANEA redan har — erfarenhet — snarare än något som behöver byggas från grunden.</p>
+  </section>
+
+  <section class="s">
+    <div class="section-label">Thin slice</div>
+    <h2>Prototypen vi byggde</h2>
+    <p>En sida i webbläsaren med ett textfält, en sökknapp och tre matchande case. Inget mer.</p>
+    <ul>
+      <li>Sju fiktiva men realistiska case som inbäddad data</li>
+      <li>Enkel keyword- och taggbaserad relevansrankning</li>
+      <li>Allt körs lokalt i webbläsaren — ingen backend, ingen riktig AI-modell</li>
+      <li>Precis tillräckligt för att testa arbetssättet, inte tekniken</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="section-label">En observation värd att uppehålla sig vid</div>
+    <p class="pullquote">Är den verkliga strategiska tillgången kanske inte bara plattformen — utan den samlade transformations-erfarenheten över kunder, implementationer och organisatoriska mönster?</p>
+  </section>
+
+  <section class="s">
+    <div class="section-label">Varför detta är intressant</div>
+    <ul>
+      <li>Minskar koordinationsfriktion mellan konsulter och team</li>
+      <li>Återanvänder erfarenhet som idag bärs av enskilda individer</li>
+      <li>Gör återkommande organisatoriska mönster synliga snarare än underförstådda</li>
+      <li>Hjälper människor att navigera komplexitet snabbare, tillsammans</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="section-label">Nästa steg</div>
+    <p>Nästa steg är inte att bygga något stort. Det är att visa prototypen för några riktiga konsulter och observera om de spontant ser värde i arbetssättet — innan vi fattar några beslut om vad som bör byggas på riktigt.</p>
+  </section>
+
+</article>
+
+<div class="try-divider">
+  <div class="section-label">Prova prototypen</div>
+</div>
+
+<div class="wrap">
+  <div class="panel">
+    <label for="q">Beskriv kundsituationen</label>
+    <textarea id="q" placeholder="t.ex. Tier 1 fordonsleverantör ska ISO 9001-certifiera samtidigt som vi inför OKR..."></textarea>
+    <div class="row">
+      <button id="go">Hitta liknande</button>
+      <span class="examples">
+        Prova:
+        <a data-q="Tier 1 fordonsleverantör vill ISO-certifiera samtidigt som vi inför OKR">Fordon + ISO + OKR</a>
+        <a data-q="Kommunalt energibolag, dokumentkaos efter omorganisation">Energi + dokument</a>
+        <a data-q="Tillverkningskoncern, projektportfölj efter misslyckad MS Project-utrullning">Tillverkning + portfölj</a>
+      </span>
+    </div>
+  </div>
+
+  <div id="results" class="results"></div>
+</div>
+
+<footer>
+  <p class="personal-footer">
+    Created by
+    <strong class="personal-footer-name">Johan Lindengard</strong>
+    —
+    <span class="personal-footer-role">IT Consultant / AI-driven prototyping</span>
+    <span class="personal-footer-sep" aria-hidden="true">·</span>
+    <a class="personal-footer-link"
+       href="https://www.linkedin.com/in/johan-lindengard/"
+       target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  </p>
+</footer>
+
+<script>
+const CASES = [
+  {
+    title: "Tier 2-fordonsleverantör: ISO 9001 + OKR i samma kvartal",
+    industry: "Fordon",
+    size: "350 anställda",
+    challenge: "Skulle ISO 9001-certifiera samtidigt som ny VD ville införa OKR. Två styrlogiker krockade i organisationen.",
+    approach: "CANEA Strategy + Process. Kopplade OKR-objectives som ägare till processkartor istället för parallella system. Workshops med kvalitetschef och VD tillsammans.",
+    pitfalls: "Underskattade motståndet från kvalitetsorganisationen som såg OKR som hot mot certifieringen.",
+    duration: "6 månader",
+    outcome: "Certifierat på första försök. OKR-anslutningsgrad 78% efter 2 kvartal.",
+    tags: ["fordon", "automotive", "iso", "9001", "okr", "strategi", "process", "certifiering", "tier"]
+  },
+  {
+    title: "Kommunalt energibolag: dokumentkontroll efter omorganisation",
+    industry: "Energi",
+    size: "420 anställda",
+    challenge: "Efter sammanslagning av två förvaltningar fanns 11 olika dokumentlager. Operativ personal hittade inte gällande rutiner.",
+    approach: "CANEA Document som primärlager. Migrering i tre vågor, började med drift-kritiska processer. Ambassadörsnätverk i varje avdelning.",
+    pitfalls: "Politisk styrelse ville se snabbresultat i alla avdelningar samtidigt — ledde till halvmigrerade lager.",
+    duration: "9 månader",
+    outcome: "Reducerade dokumentlager från 11 till 1. Söktid för rutindokument från 4 min till 25 sek.",
+    tags: ["energi", "kommun", "offentlig", "dokument", "document", "omorganisation", "sammanslagning"]
+  },
+  {
+    title: "Life science scale-up: ISO 13485 utan att tappa farten",
+    industry: "Life Science",
+    size: "150 anställda",
+    challenge: "Medtech-bolag som växt från 40 till 150 personer på 18 månader. Behövde ISO 13485 för CE-märkning utan att kväva R&D-tempot.",
+    approach: "CANEA Process + Document. Definierade 'minsta nödvändiga' processkarta först, fyllde på i steg. Träning av processägare istället för konsult-driven dokumentation.",
+    pitfalls: "R&D ville inte äga sina processer — löstes genom att göra processägarskap till del av tech lead-rollen.",
+    duration: "7 månader",
+    outcome: "Certifierat. R&D-cykeltid ökade endast 6% jämfört med pre-certifiering.",
+    tags: ["life-science", "medtech", "iso", "13485", "scale-up", "process", "rd", "ce", "certifiering"]
+  },
+  {
+    title: "Livsmedelsproducent: ledningssystem efter förvärv",
+    industry: "Livsmedel",
+    size: "600 anställda",
+    challenge: "Köptes av nordisk koncern som krävde harmoniserat ledningssystem inom 12 månader. Befintliga rutiner var muntliga.",
+    approach: "CANEA ONE full implementation. Konsult-tung start (process mapping workshops) följt av utbildning av interna superanvändare.",
+    pitfalls: "Produktionschefer såg ledningssystemet som koncernens kontrollverktyg — krävde explicit förhandling om vad som rapporterades uppåt.",
+    duration: "11 månader",
+    outcome: "Harmoniserad rapportering på plats. Användarbetyg 4.2/5 efter 1 år.",
+    tags: ["livsmedel", "food", "förvärv", "koncern", "ledningssystem", "harmonisering", "process"]
+  },
+  {
+    title: "Statlig myndighet: strategiska mål till operativ aktivitet",
+    industry: "Offentlig sektor",
+    size: "1200 anställda",
+    challenge: "Regleringsbrev från regeringen blev aldrig kopplade till operativt arbete. Ledningen kunde inte svara på 'vad gör vi för att uppfylla mål 3?'",
+    approach: "CANEA Strategy som målnedbrytningslager, kopplad till befintliga projektsystem. Initial fokus på 4 prioriterade mål, inte alla 17.",
+    pitfalls: "Ville från start mäta alla mål — vi tvingade fram begränsning till 4 för att undvika compliance-teater.",
+    duration: "8 månader",
+    outcome: "Spårbarhet från regleringsbrev till aktiv leverans på alla 4 prioriterade mål.",
+    tags: ["offentlig", "statlig", "myndighet", "strategi", "mål", "spårbarhet", "okr"]
+  },
+  {
+    title: "Tillverkningskoncern: portföljstyrning efter MS Project-haveri",
+    industry: "Tillverkning",
+    size: "2500 anställda",
+    challenge: "MS Project-utrullning misslyckades — PMO hade ingen samlad portföljbild. 80+ pågående projekt utan prioriteringsstöd.",
+    approach: "CANEA Project som portföljlager ovanpå befintliga PM-verktyg. Migrerade inte projektdetaljer, bara metadata och status.",
+    pitfalls: "Projektledare misstänkte att det skulle bli övervakning — krävde tydligt avgränsad metadata-policy.",
+    duration: "5 månader",
+    outcome: "Portföljvy på plats. 22 projekt avslutade/pausade efter första prioriteringscykeln.",
+    tags: ["tillverkning", "manufacturing", "projekt", "portfölj", "pmo", "ms-project", "prioritering"]
+  },
+  {
+    title: "Specialkemikalier: process-mining-ambition i compliance-tung miljö",
+    industry: "Kemi",
+    size: "400 anställda",
+    challenge: "Ville införa process mining men reglerade arbetsmoment fick inte avvika från dokumenterad procedur. Spänning mellan insikt och regelefterlevnad.",
+    approach: "CANEA Process som dokumentlager + manuell loggning av faktisk följd för 3 utvalda processer. Avvikelser hanterades i Workflow.",
+    pitfalls: "Anställda kände sig övervakade trots tydlig kommunikation — ledde till justering av vilka dataelement som loggades.",
+    duration: "6 månader",
+    outcome: "Hittade 14 substantiella avvikelser, 6 ledde till processuppdatering, 4 till utbildningsinsats.",
+    tags: ["kemi", "chemicals", "compliance", "process", "mining", "workflow", "reglerad"]
+  }
+];
+
+function score(query, c) {
+  const q = query.toLowerCase();
+  const tokens = q.split(/[^a-zåäö0-9]+/i).filter(t => t.length > 2);
+  const haystack = (c.title + " " + c.industry + " " + c.challenge + " " + c.tags.join(" ")).toLowerCase();
+  let s = 0;
+  for (const t of tokens) {
+    if (haystack.includes(t)) s += 1;
+  }
+  for (const tag of c.tags) {
+    const re = new RegExp("\\b" + tag.replace(/[-]/g, "[- ]?") + "\\b", "i");
+    if (re.test(q)) s += 3;
+  }
+  if (q.includes(c.industry.toLowerCase())) s += 4;
+  return s;
+}
+
+function render(results) {
+  const root = document.getElementById("results");
+  if (results.length === 0) {
+    root.innerHTML = '<div class="empty">Inga träffar. Prova en bredare beskrivning eller ett av exemplen ovan.</div>';
+    return;
+  }
+  root.innerHTML = results.map(({ c, s }) => `
+    <article class="case">
+      <span class="score">match ${s}</span>
+      <h3>${c.title}</h3>
+      <div class="meta">
+        <span class="tag">${c.industry}</span>
+        <span class="tag">${c.size}</span>
+      </div>
+      <dl>
+        <dt>Situation</dt><dd>${c.challenge}</dd>
+        <dt>Approach</dt><dd>${c.approach}</dd>
+        <dt>Fallgrop</dt><dd>${c.pitfalls}</dd>
+        <dt>Tid &amp; utfall</dt><dd>${c.duration}. ${c.outcome}</dd>
+      </dl>
+    </article>
+  `).join("");
+}
+
+function search() {
+  const q = document.getElementById("q").value.trim();
+  if (!q) { render([]); return; }
+  const ranked = CASES
+    .map(c => ({ c, s: score(q, c) }))
+    .filter(r => r.s > 0)
+    .sort((a, b) => b.s - a.s)
+    .slice(0, 3);
+  render(ranked);
+}
+
+document.getElementById("go").addEventListener("click", search);
+document.getElementById("q").addEventListener("keydown", e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === "Enter") search();
+});
+document.querySelectorAll(".examples a").forEach(a => {
+  a.addEventListener("click", () => {
+    document.getElementById("q").value = a.getAttribute("data-q");
+    search();
+  });
+});
+</script>
+</body>
+</html>
